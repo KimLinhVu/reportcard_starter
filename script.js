@@ -197,7 +197,16 @@ function addCourseRowToReportCard(reportCardTableElement, course, rowNum) {
  * This function should add HTML for the totals row in the report card.
  */
 function addTotalsRow(reportCardTableElement) {
-  reportCardTableElement.innerHTML += ``
+  reportCardTableElement.innerHTML += `
+  <div class="table-row totals even">
+      <h4 class="code-col"></h4>
+      <h4 class="name-col"></h4>
+      <h4 class="sem-col">Totals:</h4>
+      <h4 id="total-credits" class="cred-col"> ${addUpStudentCredits(reportCardTableElement)} credits </h4>
+      <h4 class="lett-col"></h4>
+      <h4 id="total-pts" class="pts-col">?</h4>
+  </div>  
+  `
 }
 
 /**
@@ -223,6 +232,7 @@ function updateReportCard(reportCardTableElement, currentSemester) {
   // add your code here
   addReportCardHeaders(reportCardTableElement)
   studentData[currentSemester].forEach(course => addCourseRowToReportCard(reportCardTableElement, course))
+  addTotalsRow(reportCardTableElement)
 }
 
 /**
@@ -235,14 +245,6 @@ function updateReportCard(reportCardTableElement, currentSemester) {
  * If the dropdown classList contains the "closed" class, the 'openDropdown' function should remove it.
  * If the dropdown classList doesn't contain the "closed" class, 'closeDropdown' function should add it.
  */
-function handleDropdownClick(dropdownElement){
-  if (dropdownElement.classList.contains('closed')){
-    openDropdown(dropdownElement)
-  }
-  else{
-    closeDropdown(dropdownElement)
-  }
-}
 
 function closeDropdown(dropdownElement) {
   // code goes here
@@ -316,6 +318,14 @@ function addEventListeners(
  */
 function addUpStudentCredits(reportCardTableElement) {
   // code goes here
+  var sum = 0;
+  const credits = reportCardTableElement.querySelectorAll(".credit")
+  //console.log(credits[0].textContent)
+  credits.forEach((num) => sum += parseInt(num.textContent))
+  console.log(sum)
+
+  return sum;
+  
 }
 
 /**
